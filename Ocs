@@ -21,8 +21,6 @@ fi
 # go to root
 cd
 
-sudo apt update
-
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 
 #https://github.com/adenvt/OcsPanels/wiki/tutor-debian
@@ -42,7 +40,10 @@ echo ""
 echo "Okay, that's all I need. We are ready to setup your OCS Panels now"
 read -n1 -r -p "Press any key to continue..."
 
-#apt-get update
+# Install PhP 5.6
+apt-get install apt-transport-https lsb-release ca-certificates -y
+wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 apt-get update -y
 apt-get install build-essential expect -y
 
@@ -78,49 +79,33 @@ echo "$so1"
 chown -R mysql:mysql /var/lib/mysql/
 chmod -R 755 /var/lib/mysql/
 
-sudo apt install nginx php-fpm php-mysql -y
+apt-get -y install nginx php5.6 php5.6-fpm php5.6-cli php5.6-mysql php5.6-mcrypt
+rm /etc/nginx/sites-enabled/default
+rm /etc/nginx/sites-available/default
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup 
+mv /etc/nginx/conf.d/vps.conf /etc/nginx/conf.d/vps.conf.backup 
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/UntaDotMy/OCSPANEL/master/nginx.conf" 
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/UntaDotMy/OCSPANEL/master/vps.conf" 
+sed -i 's/cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php/5.6/fpm/php.ini 
+sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/5.6/fpm/pool.d/www.conf
 
-sudo mkdir /var/www/$MYIP
-
-cat > /etc/nginx/sites-available/$MYIP <<-END
-server {
-    listen 80;
-    listen [::]:80;
-
-    root /var/www/$MYIP;
-    index index.php index.html index.htm;
-
-    server_name $MYIP;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    location ~ \.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
-    }
-}
-END
-
-sudo ln -s /etc/nginx/sites-available/your_domain.conf /etc/nginx/sites-enabled/
-
-sudo systemctl reload nginx
-
-cat > /var/www/$MYIP/info.php <<-END
-<?php
-  phpinfo();
-?>
-END
+useradd -m vps
+mkdir -p /home/vps/public_html
+rm /home/vps/public_html/index.html
+echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
+chown -R www-data:www-data /home/vps/public_html
+chmod -R g+rw /home/vps/public_html service php5.6-fpm restart
+service php5.6-fpm restart
+service nginx restart
 
 apt-get -y install git
-cd /var/www/html
+cd /home/vps/public_html
 git init
 git remote add origin https://github.com/UntaDotMy/OCSPANEL.git
 git pull origin master
-chmod 777 /var/www/html/config
-chmod 777 /var/www/html/config/config.ini
-chmod 777 /var/www/html/config/route.ini
+chmod 777 /home/vps/public_html/config
+chmod 777 /home/vps/public_html/config/config.ini
+chmod 777 /home/vps/public_html/config/route.ini
 
 #mysql -u root -p
 so2=$(expect -c "
@@ -135,7 +120,7 @@ echo "$so2"
 apt-get -y --force-yes -f install libxml-parser-perl
 
 clear
-echo "Open Browser, access http://$MYIP/ and complete the data as below!"
+echo "Open Browser, access http://$MYIP:85/ and complete the data as below!"
 echo "Database:"
 echo "- Database Host: localhost"
 echo "- Database Name: $DatabaseName"
@@ -164,7 +149,7 @@ cd /root
 #rm -f /root/jcameron-key.asc
 
 #rm -R /home/vps/public_html/installation
-rm -R /var/www/$MYIP/installation
+rm -R /home/vps/public_html/installation
 
 cd
 rm -f /root/.bash_history && history -c
@@ -173,7 +158,7 @@ echo "unset HISTFILE" >> /etc/profile
 # info
 clear
 echo "=======================================================" | tee -a log-install.txt
-echo "Please login Reseller Panel at http://$MYIP" | tee -a log-install.txt
+echo "Please login Reseller Panel at http://$MYIP:85" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
 echo "Thanks " | tee -a log-install.txt
