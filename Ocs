@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 if [ $USER != 'root' ]; then
@@ -22,7 +23,6 @@ cd
 
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 
-
 #https://github.com/adenvt/OcsPanels/wiki/tutor-debian
 
 clear
@@ -46,7 +46,6 @@ apt-get install build-essential expect -y
 
 echo "clear" >> .bashrc
 echo 'echo -e "welcome to the server $HOSTNAME" | lolcat' >> .bashrc
-echo 'echo -e "Script mod by Wang Zki"' >> .bashrc
 echo 'echo -e "Type menu to display a list of commands"' >> .bashrc
 echo 'echo -e ""' >> .bashrc
 
@@ -96,13 +95,14 @@ chmod -R g+rw /home/vps/public_html service php7.0-fpm restart
 service php7.0-fpm restart
 service nginx restart
 
-apt-get -y install zip unzip
+apt-get -y install git
 cd /home/vps/public_html
-wget https://raw.githubusercontent.com/UntaDotMy/OCSPANEL/master/EZ.zip
-unzip EZ.zip
-rm -f EZ.zip
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
+git init
+git remote add origin https://github.com/UntaDotMy/OCSPANEL.git
+git pull origin master
+chmod 777 /home/vps/public_html/config
+chmod 777 /home/vps/public_html/config/config.ini
+chmod 777 /home/vps/public_html/config/route.ini
 
 #mysql -u root -p
 so2=$(expect -c "
@@ -113,10 +113,6 @@ expect eof; ")
 echo "$so2"
 #pass
 #CREATE DATABASE IF NOT EXISTS OCS_PANEL;EXIT;
-
-chmod 777 /home/vps/public_html/config
-chmod 777 /home/vps/public_html/config/inc.php
-chmod 777 /home/vps/public_html/config/route.php
 
 apt-get -y --force-yes -f install libxml-parser-perl
 
@@ -149,23 +145,18 @@ cd /root
 
 #rm -f /root/jcameron-key.asc
 
+#rm -R /home/vps/public_html/installation
 rm -R /home/vps/public_html/installation
 
 cd
 rm -f /root/.bash_history && history -c
 echo "unset HISTFILE" >> /etc/profile
 
-chmod 755 /home/vps/public_html/config
-chmod 644 /home/vps/public_html/config/inc.php
-chmod 644 /home/vps/public_html/config/route.php
-
 # info
 clear
 echo "=======================================================" | tee -a log-install.txt
 echo "Please login Reseller Panel at http://$MYIP" | tee -a log-install.txt
 echo "" | tee -a log-install.txt
-echo "Auto Script Installer OCS Panels NazProNet"  | tee -a log-install.txt
-
 echo "" | tee -a log-install.txt
 echo "Thanks " | tee -a log-install.txt
 echo "" | tee -a log-install.txt
