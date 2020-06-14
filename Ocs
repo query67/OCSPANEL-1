@@ -114,13 +114,13 @@ cat > /var/www/$MYIP/info.php <<-END
 END
 
 apt-get -y install git
-cd /var/www/$MYIP
+cd /var/www/html
 git init
 git remote add origin https://github.com/UntaDotMy/OCSPANEL.git
 git pull origin master
-chmod 777 /var/www/$MYIP/config
-chmod 777 /var/www/$MYIP/config/config.ini
-chmod 777 /var/www/$MYIP/config/route.ini
+chmod 777 /var/www/html/config
+chmod 777 /var/www/html/config/config.ini
+chmod 777 /var/www/html/config/route.ini
 
 #mysql -u root -p
 so2=$(expect -c "
