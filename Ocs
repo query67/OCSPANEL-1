@@ -78,7 +78,7 @@ echo "$so1"
 chown -R mysql:mysql /var/lib/mysql/
 chmod -R 755 /var/lib/mysql/
 
-sudo apt install nginx php-fpm php-mysql
+sudo apt install nginx php-fpm php-mysql -y
 
 sudo mkdir /var/www/$MYIP
 
