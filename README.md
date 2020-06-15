@@ -20,4 +20,4 @@ Requirements
 
 Installation
 ------------
-* Debian: wget https://raw.githubusercontent.com/UntaDotMy/OCSPANEL/master/Ocs && chmod +x Ocs && ./Ocs
+* Debian: wget https://raw.githubusercontent.com/UntaDotMy/OCSPANEL/master/Autoinstall && chmod +x Autoinstall && ./Autoinstall
