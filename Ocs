@@ -101,7 +101,7 @@ chmod 777 /home/vps/public_html/config
 chmod 777 /home/vps/public_html/config/config.ini
 chmod 777 /home/vps/public_html/config/route.ini
 
-#mysql -u root -p
+#sudo mysql -u root -p
 so2=$(expect -c "
 spawn mysql -u root -p; sleep 3
 expect \"\";  sleep 3; send \"$DatabasePass\r\"
