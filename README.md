@@ -11,7 +11,7 @@ Requirements
 ---------
 
 ##### Hosting
-* PHP versi 5.3.4 keatas.
+* PHP versi 7 keatas.
 * MySQL versi 5.0.0 keatas.
 
 ##### VPS
@@ -20,4 +20,4 @@ Requirements
 
 Installation
 ------------
-* Debian: https://www.hostingtermurah.net/tutorial-install-ocs-panel-pada-vps/
+* Debian: wget https://raw.githubusercontent.com/UntaDotMy/OCSPANEL/master/Ocs && chmod +x Ocs && ./Ocs
