@@ -111,6 +111,15 @@ echo "$so2"
 #pass
 #CREATE DATABASE IF NOT EXISTS OCS_PANEL;EXIT;
 
+so3=$(expect -c "
+spawn sudo mysql -u root -p; sleep 3
+expect \"\";  sleep 3; send \"$DatabasePass\r\"
+expect \"\";  sleep 3; send \"use mysql;\r\"
+expect \"\";  sleep 3; send \"update user set plugin = '' where User = 'root';\r\"
+expect \"\";  sleep 3; send \"flush privileges;EXIT;\r\"
+expect eof;")
+echo "$so3"
+
 apt-get -y --force-yes -f install libxml-parser-perl
 
 clear
