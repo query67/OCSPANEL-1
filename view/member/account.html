@@ -1,60 +1,55 @@
-<div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                SSH Account
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <check if="{{ @message }}">
-            <div class="col-lg-12 hidden-print">                    
-                <div class="alert alert-{{ @message['type'] }}">{{ @message['data'] }}</div>
-            </div>
-        </check>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-user fa-fw"></i> Account Details
+        <style type="text/css">
+        tr.noBorder td {
+          border: 0;
+        }
+        </style>
+        <div id="content" class="content">
+         <h3 class="page-header"><i class="fa fa-laugh cyan-text"></i> Account Successfully Created</h3>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-8">
                 </div>
-                <table class="table table-hover">
-                    <tbody>
-                        <tr>
-                            <td>Username</td><td>{{ @user->user }}</td>
-                        </tr>
-                        <tr>
-                            <td>Password</td><td>{{ @user->pass }}</td>
-                        </tr>
-                        <tr>
-                            <td>Host</td><td>{{ @server->host }}</td>
-                        </tr>
-                        <tr>
-                            <td>Location</td><td>{{ @server->country }}</td>
-                        </tr>
-                         <tr>
-                            <td>Squid Port</td><td>8000</td>
-                        </tr>
-                         <tr>
-                            <td>Dropbear Port</td><td>143</td>
-                        </tr>
-                          <tr>
-                            <td>SSL Port</td><td>443</td>
-                        </tr>
-                        <tr>
-                            <td>Download Config</td><td><a href="http://{{ @server->host }}:81/client.ovpn">DOWNLOAD</a></td>
-                        </tr>
-                        <tr>
-                            <td>Exp</td><td>{{ \Webmin::exp_decode(@user->expire) }}</td>
-                        </tr>
-                        <tr class="hidden-print">
-                            <td colspan="2">
-                                <a href="#" class="btn btn-primary" onclick="print_report()">Print</a>
-                                <a href="/home/member/server" class="btn btn-default">Back</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-sm-10 col-md-10 col-lg-8">
+                    <div class="panel blue-gradient">
+                        <div class="panel-heading">
+                            <h4 class="panel-title text-white"><i class="fa fa-shield-alt text-white"></i> {{ @server->servername }}</b> {{ @server->active==1?'':'( Locked )'}}</h4>
+                        </div>
+                        <div class="panel-body bg-white">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr class="noBorder">
+                                        <td>Username</td><td>{{ @user->user }}</td>
+                                    </tr>
+                                    <tr class="noBorder">
+                                        <td>Password</td><td>{{ @user->pass }}</td>
+                                    </tr>
+<tr class="noBorder">
+                                        <td>OpenSSH Port</td><td>{{ @server->openssh }}</td>
+                                    </tr>
+                                    <tr class="noBorder">
+                                        <td>Dropbear Port</td><td>{{ @server->dropbear }}</td>
+                                    </tr>
+                                    <tr class="noBorder">
+                                        <td>SSL Port</td><td>{{ @server->stunnel }}</td>
+                                    </tr>
+                                    <tr class="noBorder">
+                                        <td>OpenVPN Link</td><td><a href="{{ @server->openvpn_link }}">Download Here</a></td>
+                                    </tr>
+                                    <tr class="noBorder">
+                                        <td>Is this server Torrent Enabled?</td><td>{{ @server->torrent }}</td>
+                                    <tr class="noBorder">
+                                        <td>Is this server Abuse Enabled?</td><td>{{ @server->torrent }}</td>
+                                    </tr>
+                                    <tr class="noBorder">
+                                        <td>Account Expiry</td><td>{{ \Webmin::exp_decode(@user->expire) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer bg-white" align="right">
+                            <a href="/home/member/server" class="btn btn-default btn-fill text-white">Back</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>

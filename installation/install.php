@@ -16,7 +16,7 @@ class Install {
 
 	function Set($f3) {
 		if ( ! \Check::confirm('POST.password')) {
-			$this->flash('Konfirmasi Password Tidak Cocok');
+			$this->flash('Confirm Password Not Match');
 			$f3->reroute($f3->get('URI'));
 		}
 		$post = $f3->get('POST');
@@ -31,15 +31,16 @@ class Install {
 			$db->exec(explode(';',$f3->read('installation/install.sql')));
 			$user = new \DB\SQL\Mapper($db,'user');
 			$user->username = $post['username'];
+			$user->email = $post['email'];
 			$user->password = \Bcrypt::instance()->hash($post['password']);
 			$user->type = 1;
 			$user->save();
 			$key = bin2hex(openssl_random_pseudo_bytes(32));
-			$data = "[globals]\nDEBUG=0\nAUTOLOAD=\"controller/;model/\"\nUI=\"view/\"\nAPP_KEY=\"$key\"\nDB_SET=\"$dsn\"\nDB_USER=\"$db_user\"\nDB_PASS=\"$db_pass\"";
-			$f3->write('config/config.ini',$data);
-			$f3->write('config/route.ini',$f3->read('installation/route.ini'));
+			$data = "<?php die();\n[globals]\nDEBUG=0\nAUTOLOAD=\"controller/;model/\"\nUI=\"view/\"\nAPP_KEY=\"$key\"\nDB_SET=\"$dsn\"\nDB_USER=\"$db_user\"\nDB_PASS=\"$db_pass\"\n?>";
+			$f3->write('config/inc.php',$data);
+			$f3->write('config/route.php',$f3->read('installation/route.ini'));
 			$db->commit();
-			$this->flash('Success... Silahkan Hapus Folder Installation','success');
+			$this->flash('Success... Please Return to Terminal now and Delete Folder Installation','success');
 		} catch (Exception $e) {
 			$db->rollback();
 			$this->flash($e->getMessage());

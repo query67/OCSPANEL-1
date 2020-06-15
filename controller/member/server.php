@@ -31,11 +31,11 @@ class Server extends \Home {
 		$server = $this->loadServer();
 		$account = new \Webmin($server);
 		if (($saldo = $this->me->saldo)<$server->price) {
-			$this->flash('Your Balance is Insufficient');
+			$this->flash('Your Balance is not enough, Contact Administrator');
 			$f3->reroute($f3->get('URI'));
 		}
 		if ( ! $account->check($f3->get('POST.user'))) {
-			$this->flash('User Already Listed, Try Again');
+			$this->flash('User Already Registered, Try another User');
 			$f3->reroute($f3->get('URI'));
 		}
 		$account->copyFrom('POST');
@@ -50,12 +50,12 @@ class Server extends \Home {
 		$active = date("Y/m/d",strtotime("+30 days"));
 		$account->expire = \Webmin::exp_encode($active);
 		if( ! $account->save()) {
-			$this->flash('Failed, Try Again');
+			$this->flash('Failed, Try agian');
 			$f3->reroute($f3->get('URI'));
 		}
 		$this->me->saldo = $this->me->saldo-$server->price;
 		$this->me->save();
-		$this->flash('Successfully Created Account','success');
+		$this->flash('Account Purchases Successful','success');
 		$f3->set('SESSION.uid',$account->uid);
 		$f3->set('SESSION.pass',$pass);
 		$f3->reroute($f3->get('URI').'/success');
