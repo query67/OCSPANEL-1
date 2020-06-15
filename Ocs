@@ -123,7 +123,7 @@ echo "$so3"
 apt-get -y --force-yes -f install libxml-parser-perl
 
 clear
-echo "Open Browser, access http://$MYIP:85/ and complete the data as below!"
+echo "Open Browser, access http://$MYIP/ and complete the data as below!"
 echo "Database:"
 echo "- Database Host: localhost"
 echo "- Database Name: $DatabaseName"
