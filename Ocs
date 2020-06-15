@@ -98,7 +98,7 @@ git init
 git remote add origin https://github.com/UntaDotMy/OCSPANEL.git
 git pull origin master
 chmod 777 /home/vps/public_html/config
-chmod 777 /home/vps/public_html/config/config.php
+chmod 777 /home/vps/public_html/config/inc.php
 chmod 777 /home/vps/public_html/config/route.php
 
 #sudo mysql -u root -p
