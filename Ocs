@@ -47,11 +47,6 @@ echo 'echo -e "welcome to the server $HOSTNAME" | lolcat' >> .bashrc
 echo 'echo -e "Type menu to display a list of commands"' >> .bashrc
 echo 'echo -e ""' >> .bashrc
 
-#Deb10 Mysql things
-wget http://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb
-sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
-sudo apt update -y
-
 apt-get install -y mysql-server
 
 #sudo mysql_secure_installation
