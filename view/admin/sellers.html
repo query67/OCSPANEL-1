@@ -30,7 +30,7 @@
                 <div class="form-group">
                   <label>Deposit</label>
                   <div class="input-group">
-                    <span class="input-group-addon">₱ </span>
+                    <span class="input-group-addon">RM </span>
                     <input class="form-control" placeholder="100" name="deposit" type="number" min="1" step="1" required>
                   </div>
                 </div>
@@ -63,7 +63,7 @@
                   <tr>
                     <td width="25%">{{ @no }}</td>
                     <td width="25%">{{ @seller->username }}</td>                                    
-                    <td width="25%">₱ {{ @seller->saldo }}</td>                                     
+                    <td width="25%">RM {{ @seller->saldo }}</td>                                     
                     <td width="25%"> 
                       <a href="/home/admin/seller/{{ @seller->id }}" class="btn btn-primary">Edit</a>&nbsp;
                       <check if="{{ @seller->active==1 }}">

@@ -39,7 +39,7 @@
 	<li><a href="javascript:;"><i class="fa fa-crown"></i> User Rank: {{ @me->type==1?'Admin':'Premium' }}</a></li>
 	<check if="{{ @me->type==1 }}">
   <false>
-	<li><a href="javascript:;"><i class="fa fa-money-bill-alt"></i> Balance: ₱{{ @me->saldo }}.00</a></li>
+	<li><a href="javascript:;"><i class="fa fa-money-bill-alt"></i> Balance: RM{{ @me->saldo }}.00</a></li>
 	</false>
 	</check>
 	<li><a href="javascript:;"><i class="fa fa-user"></i> Username: {{ @me->username }}</a></li>

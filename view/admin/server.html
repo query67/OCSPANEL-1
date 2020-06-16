@@ -70,7 +70,7 @@
               <input class="form-control" placeholder="your-ip/configs.zip or your own link" name="openvpn_link" type="text" value="{{ @server->openvpn_link }}" required>
             </div>
             <div class="form-group">
-              <label>Squid/Privoxy Port</label>
+              <label>Squid/Proxy Port</label>
               <input class="form-control" placeholder="8085, 3355, 8086, 3356" name="proxy" type="text" value="{{ @server->proxy }}" required>
             </div>
             <div class="form-group">
@@ -91,7 +91,7 @@
             <div class="form-group">
               <label>Price</label>
               <div class="input-group">
-                <span class="input-group-addon">₱</span>
+                <span class="input-group-addon">RM</span>
                 <input class="form-control" placeholder="10" name="price" type="number" step="1" value="{{ @server->price }}" required>
               </div>
             </div>
